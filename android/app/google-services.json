@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "647435077942",
+    "project_id": "hadith-diary",
+    "storage_bucket": "hadith-diary.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647435077942:android:74bbcf373ae3ba3e864b97",
+        "android_client_info": {
+          "package_name": "com.example.hadith_diary"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACCrUbMeAivMmGBcv_0m5g_TNQVjgfg8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
