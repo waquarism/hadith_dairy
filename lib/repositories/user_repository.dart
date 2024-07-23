@@ -10,14 +10,16 @@ class UserRepository extends GetxController {
 
   final _firestore = FirebaseFirestore.instance;
 
-  createUser(User user) async {
+  Future<void> createUser(User user) async {
     await _firestore.collection('users').add(user.toJson()).then(
       (value) {
         Get.snackbar('Success', 'User has been created successfully');
       },
-    ).catchError((e, stacktrace) {
-      Get.snackbar('error', 'something went wrong. Try again.');
-      log(e.toString());
-    });
+    ).catchError(
+      (e, stacktrace) {
+        Get.snackbar('error', 'something went wrong. Try again.');
+        log(e.toString());
+      },
+    );
   }
 }

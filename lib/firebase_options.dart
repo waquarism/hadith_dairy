@@ -44,8 +44,8 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: '',
-    appId: '',
+    apiKey: 'AIzaSyBHgf9m1_hfz_XThB86b4PJNSnkT15x3C8',
+    appId: '1:647435077942:web:82e7258bf2e64239864b97',
     messagingSenderId: '647435077942',
     projectId: 'hadith-diary',
     authDomain: 'hadith-diary.firebaseapp.com',
@@ -53,16 +53,16 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: '',
-    appId: '',
+    apiKey: 'AIzaSyACCrUbMeAivMmGBcv_0m5g_TNQVjgfg8Q',
+    appId: '1:647435077942:android:74bbcf373ae3ba3e864b97',
     messagingSenderId: '647435077942',
     projectId: 'hadith-diary',
     storageBucket: 'hadith-diary.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: '',
-    appId: '',
+    apiKey: 'AIzaSyAeO8E_mYfwqvoWzmD2bapHdcffZig5qpA',
+    appId: '1:647435077942:ios:fb4cc1f309a4b969864b97',
     messagingSenderId: '647435077942',
     projectId: 'hadith-diary',
     storageBucket: 'hadith-diary.appspot.com',
@@ -70,8 +70,8 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: '',
-    appId: '',
+    apiKey: 'AIzaSyAeO8E_mYfwqvoWzmD2bapHdcffZig5qpA',
+    appId: '1:647435077942:ios:96ffed9f534d12d8864b97',
     messagingSenderId: '647435077942',
     projectId: 'hadith-diary',
     storageBucket: 'hadith-diary.appspot.com',

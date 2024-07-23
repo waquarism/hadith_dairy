@@ -19,22 +19,23 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthController authController = Get.put(AuthController());
 
-    void navigate(){
+    void navigate() {
       Navigator.push(context, AuthPage.route());
     }
 
     return Scaffold(
+      backgroundColor: Color(0xff111111),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Text('HomePage'),
-          ElevatedButton(
-            onPressed: () async {
-              await authController.logout();
-              navigate();
-            },
-            child: const Text('Log out'),
-          )
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+            Icon(Icons.hd,color: Color(0xffffffff),size: 54,),
+            Icon(Icons.explore,color: Color(0xffffffff),size: 54,)
+            
+          ],
+          ).marginSymmetric(vertical: 44,horizontal: 24),
         ],
       ),
     );

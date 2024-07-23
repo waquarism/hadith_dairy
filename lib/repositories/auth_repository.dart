@@ -52,7 +52,6 @@ class AuthRepository extends GetxController {
       ),
     );
     if (userCredential.user == null) return false;
-    // write code to create user account in backend.
     return true;
   }
 

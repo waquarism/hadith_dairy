@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../const/image.dart';
+import '../const/widget_helpers/app_text.dart';
 import '../controller/auth_controller.dart';
 import 'home_page.dart';
 
@@ -30,67 +32,121 @@ class AuthPage extends StatelessWidget {
     }
 
     return Scaffold(
-      body: Form(
-        key: formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormField(
-              controller: authController.phoneNumber,
-              keyboardType: TextInputType.phone,
-              decoration: const InputDecoration(
-                label: Text('PHONE NUMBER'),
-                prefixIcon: Icon(Icons.vpn_lock_sharp),
+      resizeToAvoidBottomInset: false,
+      extendBody: true,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(Images.bg),
+          ),
+        ),
+        child: Form(
+          key: formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AppText.headingText(text: "Continue", size: 32),
+              AppText.headingText(
+                text: "with phone number",
               ),
-            ),
-            Obx(
-              () {
-                return (authController.otpSent.value)
-                    ? Container()
-                    : ElevatedButton(
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {
-                            AuthController.instance.verifyPhoneNumber(
-                              authController.phoneNumber.text.trim(),
-                            );
-                          }
-                        },
-                        child: const Text("Next"),
-                      );
-              },
-            ),
-            Obx(
-              () {
-                return Column(
-                  children: [
-                    if (authController.otpSent.value) ...[
-                      TextFormField(
-                        controller: authController.otp,
-                        decoration: const InputDecoration(
-                          label: Text('OTP'),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () async {
-                          if (formKey.currentState!.validate()) {
-                            bool isVerified =
-                                await AuthController.instance.verifiyOtp(
-                              authController.otp.text.trim(),
-                              authController.phoneNumber.text.trim(),
-                            );
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: Colors.blueGrey,
+                  ),
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Center(
+                  child: TextFormField(
+                    controller: authController.phoneNumber,
+                    keyboardType: TextInputType.phone,
+                    // maxLength: 10,
 
-                            navigate(isVerified);
-                          }
-                        },
-                        child: const Text("Verify OTP"),
-                      ),
-                    ]
-                  ],
-                );
-              },
-            ),
-          ],
-        ).paddingAll(24),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      label: Text('PHONE NUMBER'),
+                      prefixIcon: Icon(Icons.call),
+                      prefix: Text("+91 "),
+                      prefixStyle: TextStyle(color: Colors.black),
+                    ),
+                    onFieldSubmitted: (value) {
+                      if (formKey.currentState!.validate()) {
+                        AuthController.instance.verifyPhoneNumber(
+                          authController.phoneNumber.text.trim(),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ).paddingSymmetric(vertical: 12),
+              Obx(
+                () {
+                  return (authController.otpSent.value)
+                      ? Container()
+                      : ElevatedButton(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              AuthController.instance.verifyPhoneNumber(
+                                authController.phoneNumber.text.trim(),
+                              );
+                            }
+                          },
+                          child: const Text("Next"),
+                        );
+                },
+              ),
+              Obx(
+                () {
+                  return Column(
+                    children: [
+                      if (authController.otpSent.value) ...[
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 2,
+                              color: Colors.blueGrey,
+                            ),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Center(
+                            child: TextFormField(
+                              
+                              controller: authController.otp,
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                label: Text('OTP'),
+                              ),
+                              onFieldSubmitted: (value) async {
+                                if (formKey.currentState!.validate()) {
+                                  bool isVerified = await AuthController.instance
+                                      .verifiyOtp(authController.otp.text.trim());
+                            
+                                  navigate(isVerified);
+                                }
+                              },
+                            ).marginSymmetric(horizontal: 24),
+                          ),
+                        ).paddingOnly(bottom: 12),
+                        ElevatedButton(
+                          onPressed: () async {
+                            if (formKey.currentState!.validate()) {
+                              bool isVerified = await AuthController.instance
+                                  .verifiyOtp(authController.otp.text.trim());
+                              navigate(isVerified);
+                            }
+                          },
+                          child: const Text("Verify OTP"),
+                        ),
+                      ]
+                    ],
+                  );
+                },
+              ),
+            ],
+          ).paddingAll(24),
+        ),
       ),
     );
   }
