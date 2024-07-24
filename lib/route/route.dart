@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hadith_diary/view/splash.dart';
 
-import '../view/auth_page.dart';
-import '../view/home_page.dart';
+import '../view/auth_page/auth_page.dart';
+import '../view/home_page/home_page.dart';
 import '../view/not_found_page.dart';
 
 final Map<String, Route<dynamic> Function()> routes = {

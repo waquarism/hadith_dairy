@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../const/image.dart';
-import '../const/widget_helpers/app_text.dart';
-import '../controller/auth_controller.dart';
-import 'home_page.dart';
+import '../../const/image.dart';
+import '../../const/widget_helpers/app_text.dart';
+import '../../controller/auth_controller.dart';
+import '../home_page/home_page.dart';
 
 class AuthPage extends StatelessWidget {
   static const String routeName = '/auth-page';
@@ -25,7 +25,7 @@ class AuthPage extends StatelessWidget {
 
     void navigate(bool isVerified) {
       if (isVerified) {
-        Navigator.push(context, Homepage.route());
+        Navigator.pushReplacement(context, Homepage.route());
       } else {
         Get.snackbar('Incorrect OTP', 'Please enter a valid OTP');
       }
@@ -111,7 +111,6 @@ class AuthPage extends StatelessWidget {
                           ),
                           child: Center(
                             child: TextFormField(
-                              
                               controller: authController.otp,
                               keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
@@ -120,9 +119,10 @@ class AuthPage extends StatelessWidget {
                               ),
                               onFieldSubmitted: (value) async {
                                 if (formKey.currentState!.validate()) {
-                                  bool isVerified = await AuthController.instance
-                                      .verifiyOtp(authController.otp.text.trim());
-                            
+                                  bool isVerified =
+                                      await AuthController.instance.verifiyOtp(
+                                          authController.otp.text.trim());
+
                                   navigate(isVerified);
                                 }
                               },
@@ -143,6 +143,17 @@ class AuthPage extends StatelessWidget {
                     ],
                   );
                 },
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        Homepage.route(),
+                      );
+                    },
+                    child: const Text('SKIP')),
               ),
             ],
           ).paddingAll(24),

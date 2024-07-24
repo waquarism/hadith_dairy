@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import '../view/auth_page.dart';
-import '../view/home_page.dart';
+import '../view/auth_page/auth_page.dart';
+import '../view/home_page/home_page.dart';
 
 class AuthRepository extends GetxController {
   static AuthRepository get instance => Get.find();
