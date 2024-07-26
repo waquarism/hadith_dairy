@@ -15,4 +15,18 @@ abstract class AppText {
       ),
     );
   }
+
+  static Widget buttonText({
+    required String text,
+    double size = 18,
+    Color color = Colors.black,
+  }) {
+    return Text(
+      text,
+      style: GoogleFonts.poppins(
+        color: color,
+        fontSize: size,
+      ),
+    );
+  }
 }

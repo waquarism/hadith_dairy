@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../const/images.dart';
 import '../../../const/widget_helpers/app_text.dart';
 import '../../../controller/auth_controller.dart';
 import '../../../controller/home_page_controller.dart';
@@ -42,24 +43,20 @@ class Home extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Icon(
-                Icons.hd,
-                color: Color(0xffffffff),
-                size: 54,
-              ),
+              Image.asset(Images.hdLogoWhite,scale: 4,),
               InkWell(
                 onTap: () async {
                   await authController.logout();
                   navigate();
                 },
                 child: const Icon(
-                  Icons.explore,
+                  Icons.grid_view_rounded,
                   color: Color(0xffffffff),
-                  size: 54,
+                  size: 32,
                 ),
               ),
             ],
-          ).marginSymmetric(vertical: 44, horizontal: 24),
+          ).paddingSymmetric(horizontal: 24,vertical: 24),
           Obx(
             () {
               return Row(

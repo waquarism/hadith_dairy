@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
@@ -11,15 +9,29 @@ class UserRepository extends GetxController {
   final _firestore = FirebaseFirestore.instance;
 
   Future<void> createUser(User user) async {
-    await _firestore.collection('users').add(user.toJson()).then(
-      (value) {
-        Get.snackbar('Success', 'User has been created successfully');
-      },
-    ).catchError(
-      (e, stacktrace) {
-        Get.snackbar('error', 'something went wrong. Try again.');
-        log(e.toString());
-      },
-    );
+    final DocumentReference documentReference =
+        _firestore.collection('users').doc(user.id);
+    final DocumentSnapshot snapshot = await documentReference.get();
+
+    if (!snapshot.exists) {
+      await documentReference.set(user.toJson()).then(
+        (value) {
+          Get.snackbar(
+            'Success',
+            'User has been created successfully',
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        },
+      ).catchError(
+        (e, stacktrace) {
+          Get.snackbar(
+            'error',
+            'something went wrong. Try again.',
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        },
+      );
+    }
+    return;
   }
 }

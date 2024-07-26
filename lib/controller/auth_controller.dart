@@ -1,12 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:hadith_diary/model/user.dart';
-import 'package:hadith_diary/repositories/user_repository.dart';
 
+import '../model/user.dart';
 import '../repositories/auth_repository.dart';
+import '../repositories/user_repository.dart';
 
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();
+
+  final userRepo = Get.put(UserRepository());
 
   final phoneNumber = TextEditingController();
   final otp = TextEditingController();
@@ -19,15 +21,27 @@ class AuthController extends GetxController {
   }
 
   Future<bool> verifiyOtp(String otp) async {
-    var isVerified = await AuthRepository.instance.verfiyOtp(otp);
-    if (isVerified) {
-      UserRepository.instance.createUser(
-        User(
-          phoneNumber: "+91${phoneNumber.text.trim()}",
-        ),
+    final user = await AuthRepository.instance.verfiyOtp(otp);
+    if (user != null) {
+      final User userData = User(
+        id: user.uid,
+        phoneNumber: "+91${phoneNumber.text.trim()}",
       );
+      userRepo.createUser(userData);
+      return true;
     }
-    return isVerified;
+    return false;
+  }
+
+  googleAuthentication() async {
+    final user = await AuthRepository.instance.googleAuthentication();
+    final User userData = User(
+      id: user?.uid,
+      phoneNumber: user?.phoneNumber,
+      name: user?.displayName,
+      email: user?.email,
+    );
+    userRepo.createUser(userData);
   }
 
   Future<void> logout() async {

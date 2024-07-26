@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../view/auth_page/auth_page.dart';
 import '../view/home_page/home_page.dart';
@@ -8,7 +9,7 @@ class AuthRepository extends GetxController {
   static AuthRepository get instance => Get.find();
 
   final _auth = FirebaseAuth.instance;
-  // final _fireStore = Firebase;
+  final _google_auth = GoogleSignIn();
   late final Rx<User?> firebaseUser;
 
   RxString verId = ''.obs;
@@ -21,7 +22,9 @@ class AuthRepository extends GetxController {
   }
 
   void _setInitialScreen(User? user) {
-    user == null ? Get.offAll(() => const AuthPage()) : Get.offAll(() => const Homepage());
+    user == null
+        ? Get.offAll(() => const AuthPage())
+        : Get.offAll(() => const Homepage());
   }
 
   Future<void> verifyPhoneNumber(String phoneNumber) async {
@@ -44,19 +47,35 @@ class AuthRepository extends GetxController {
     );
   }
 
-  Future<bool> verfiyOtp(String otp) async {
+  Future<User?> verfiyOtp(String otp) async {
     final UserCredential userCredential = await _auth.signInWithCredential(
       PhoneAuthProvider.credential(
         verificationId: verId.value,
         smsCode: otp,
       ),
     );
-    if (userCredential.user == null) return false;
-    return true;
+    if (userCredential.user == null) return null;
+    return userCredential.user;
   }
 
-  Future<void> logout()async{
+  Future<User?> googleAuthentication() async {
+    final GoogleSignInAccount? googleUser = await _google_auth.signIn();
+    if (googleUser != null) {
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      final UserCredential userCredential = await _auth.signInWithCredential(credential);
+
+      return userCredential.user;
+    }
+    return null;
+  }
+
+  Future<void> logout() async {
     await _auth.signOut();
   }
-
 }
