@@ -9,7 +9,7 @@ class AuthRepository extends GetxController {
   static AuthRepository get instance => Get.find();
 
   final _auth = FirebaseAuth.instance;
-  final _google_auth = GoogleSignIn();
+  final _googleAuth = GoogleSignIn();
   late final Rx<User?> firebaseUser;
 
   RxString verId = ''.obs;
@@ -21,9 +21,11 @@ class AuthRepository extends GetxController {
     ever(firebaseUser, _setInitialScreen);
   }
 
+
+  // Decide which screen to go on startup based on auth.
   void _setInitialScreen(User? user) {
     user == null
-        ? Get.offAll(() => const AuthPage())
+        ? Get.offAll(() => const Homepage())
         : Get.offAll(() => const Homepage());
   }
 
@@ -59,7 +61,7 @@ class AuthRepository extends GetxController {
   }
 
   Future<User?> googleAuthentication() async {
-    final GoogleSignInAccount? googleUser = await _google_auth.signIn();
+    final GoogleSignInAccount? googleUser = await _googleAuth.signIn();
     if (googleUser != null) {
       final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
