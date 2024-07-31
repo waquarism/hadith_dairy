@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import 'firebase_options.dart';
 import 'repositories/auth_repository.dart';
+import 'repositories/news_repository.dart';
 import 'repositories/user_repository.dart';
 import 'route/middleware.dart';
 import 'view/splash.dart';
@@ -15,6 +16,7 @@ void main() async {
   ).then((value) {
     Get.put(AuthRepository());
     Get.put(UserRepository());
+    Get.put(NewsRepository());
   });
   runApp(const MyApp());
 }

@@ -13,27 +13,10 @@ class NewsController extends GetxController {
 
   @override
   void onReady() async {
-    super.onReady();
     await fetchNews();
   }
 
-  Future<void> fetchNews() async {
-    try {
-      isLoading(true); // Set loading to true
-      final response = await newsRepo.fetchNews();
-      final articles = response["articles"] ?? [];
-      news.clear();
-      for (var data in articles) {
-        news.add(News.fromJson(data));
-      }
-    } catch (e) {
-      print("Error fetching news: $e");
-    } finally {
-      isLoading(false); // Set loading to false
-    }
-  }
-
-  void showNews() {
-    print("~~~~~~~~~~~~>  $news");
+  fetchNews() {
+    news = newsRepo.news;
   }
 }

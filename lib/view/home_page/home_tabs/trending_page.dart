@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hadith_diary/const/widget_helpers/app_text.dart';
-import 'package:hadith_diary/controller/news_controller.dart';
+
+import '../../../const/widget_helpers/app_text.dart';
+import '../../../controller/news_controller.dart';
+import '../../../model/news.dart';
+import '../home_page.dart';
 
 class TrendingPage extends StatelessWidget {
   const TrendingPage({super.key});
@@ -9,33 +12,73 @@ class TrendingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NewsController newsController = Get.put(NewsController());
+    final newsData = newsController.news;
 
-    return ListView.builder(
-      itemCount: newsController.news.length,
-      itemBuilder: (BuildContext context, int index){
-        var news = newsController.news[index]; 
-      return ListTile(
-        title: AppText.headingText(text: news.title ?? "Empty Title",color: Colors.white),
-        subtitle: AppText.headingText(text: news.author ?? "Unknown Source", color: Colors.white70),
-        trailing: AppText.headingText(text: news.publishedAt ?? "00:00",color: Colors.amber),
-        
-      ).paddingAll(24);
-    });
+    return Obx(
+      () {
+        return newsController.news.isEmpty
+            ? Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    AppText.headingText(
+                        text: "There is no news", color: Colors.white),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(context, Homepage.route());
+                      },
+                      child: const Text("Refresh"),
+                    ),
+                  ],
+                ),
+              )
+            : Center(
+                child: SizedBox(
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      for (var data in newsData) ...[
+                        NewsCard(newsData: data),
+                      ]
+                    ],
+                  ),
+                ),
+              );
+      },
+    );
   }
 }
 
+class NewsCard extends StatelessWidget {
+  const NewsCard({super.key, required this.newsData});
 
-// SizedBox(
-//       width: double.infinity,
-//       height: 400,
-//       child: const Card(
-//         semanticContainer: true,
-//         color: Color(0xffFFF2C5),
-//         elevation: 12,
-//         child: Column(
-//           children: [
-            
-//           ],
-//         ),
-//       ).marginSymmetric(horizontal: 20, vertical: 20),
-//     );
+  final News newsData;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      semanticContainer: true,
+      color: const Color(0xffFFF2C5),
+      elevation: 12,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AppText.newsHeadingText(text: "${newsData.title}"),
+          SizedBox(
+            height: 10,
+          ),
+          AppText.newsTimeText(text: "Published at: ${newsData.publishedAt}"),
+          SizedBox(
+            height: 5,
+          ),
+          AppText.newsAuthorText(text: "Published by: ${newsData.author}"),
+          SizedBox(
+            height: 10,
+          ),
+          AppText.newsDescriptionText(
+              text: "Published by: ${newsData.description}"),
+        ],
+      ).paddingAll(24),
+    ).marginSymmetric(horizontal: 24, vertical: 10);
+  }
+}

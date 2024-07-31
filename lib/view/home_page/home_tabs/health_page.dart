@@ -5,6 +5,6 @@ class HealthPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text('healthesfadsf');
+    return const Text('healthesfadsf');
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hadith_diary/controller/news_controller.dart';
 
 import '../../controller/home_page_controller.dart';
 import 'nav/home.dart';
@@ -21,6 +22,7 @@ class Homepage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomePageController homePageController = Get.put(HomePageController());
+    Get.put(NewsController());
 
     const List<Widget> navs = [
       Home(),

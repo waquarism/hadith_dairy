@@ -3,10 +3,8 @@ import 'package:get/get.dart';
 
 import '../../../const/images.dart';
 import '../../../const/widget_helpers/app_text.dart';
-import '../../../controller/auth_controller.dart';
 import '../../../controller/news_controller.dart';
 import '../../../controller/home_page_controller.dart';
-import '../../auth_page/auth_page.dart';
 import '../home_tabs/finance_page.dart';
 import '../home_tabs/health_page.dart';
 import '../home_tabs/sports_page.dart';
@@ -17,13 +15,12 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final AuthController authController = Get.put(AuthController());
     final HomePageController homePageController = Get.put(HomePageController());
     final NewsController newsController = Get.put(NewsController());
 
-    void navigate() {
-      Navigator.pushReplacement(context, AuthPage.route());
-    }
+    // void navigate() {
+    //   Navigator.pushReplacement(context, AuthPage.route());
+    // }
 
     const List<Widget> tabs = [
       TrendingPage(),
@@ -53,7 +50,6 @@ class Home extends StatelessWidget {
               ),
               InkWell(
                 onTap: (){
-                  newsController.showNews();
                 },
                 child: Visibility(
                   visible: !newsController.isLoading.value,

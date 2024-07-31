@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_collection_literals, unnecessary_this, unnecessary_new
+
 class News {
   Source? source;
   String? author;
@@ -20,7 +22,7 @@ class News {
 
   News.fromJson(Map<String, dynamic> json) {
     source =
-        json['source'] != null ? new Source.fromJson(json['source']) : null;
+        json['source'] != null ? Source.fromJson(json['source']) : null;
     author = json['author'];
     title = json['title'];
     description = json['description'];
